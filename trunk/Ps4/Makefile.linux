@@ -1,0 +1,60 @@
+#---------------------------------------------------
+#   Linux Makefile for Computer Graphics 
+
+# A. Hanson
+
+#   B481/B581
+# Indiana University
+
+#---------------------------------------------------
+
+.SUFFIXES: .c .cpp .c++
+
+TARGET = ps4.linux
+SRC =  ps4.c
+
+DEF = defs.h
+
+# SRCS = $(SRC) $(DEF)
+LN = ln -s
+MV = mv
+RM = -rm -rf
+
+CC = /usr/bin/gcc
+
+
+LD_LIBS =  -lglut -lGLU -lGL  -lm
+INCLUDES = /usr/include
+
+OBJ = $(SRC:.c=.o)
+#OBJ2 = $(SRC2:.c=.o)
+
+# TARGETS= $(TARGET1) $(TARGET2)
+TARGETS= $(TARGET) 
+
+# OBJS = $(OBJ1) $(OBJ2)
+OBJS = $(OBJ)
+
+.c.o:
+	($(CC) -c  -I$(INCLUDES)   $<)
+.cpp.o:
+	($(CC) -c  -I$(INCLUDES)  $<)
+
+$(TARGET): $(OBJ)
+	$(CC)  -o $@ $(OBJ)  $(LD_LIBS)
+
+#$(TARGET2): $(OBJ2)
+#	$(CC)  -o $@ $(OBJ2)  $(LOCAL_LIBS) $(LD_LIBS)
+
+default : $(TARGET)
+
+
+clean:	
+	-$(RM) $(OBJS) $(TARGETS) *~
+
+# depend:
+# 	makedepend -f Makefile.sun $(SRCS)
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+

@@ -1,0 +1,51 @@
+#---------------------------------------------------
+# LINUX  Makefile for Computer Graphics  ps1
+# A. Hanson
+#   B481/B581
+# Indiana University
+#  
+#---------------------------------------------------
+
+.SUFFIXES: .c .cpp .c++
+
+
+TARGET1 = ps1_PixelOps_Rubberband.linux
+SRC1 = ps1_PixelOps_Rubberband.c 
+
+LN = ln -s
+MV = mv
+RM = -rm -rf
+
+CC = gcc
+
+##LOCAL_LIBS =  -L/l/b481/lib/linux -lglui
+##LD_LIBS =  -lglut -lGLU -lGL -lXi -lXmu -lXext -lX11 -lm
+LOCAL_LIBS =
+LD_LIBS = -lglut -lGLU -lGL
+
+OBJ1 = $(SRC1:.c=.o)
+
+
+OBJS = $(OBJ1) 
+TARGETS = $(TARGET1) 
+
+.c.o:
+	($(CC) -c $(CFLAGS) $(INCLUDES)  $<)
+.cpp.o:
+	($(CC) -c  $(CFLAGS) $(INCLUDES) $<)
+
+$(TARGET1): $(OBJ1)
+	$(CC)  $(CFLAGS) -o $@ $(OBJ1) $(INCLUDES) $(LOCAL_LIBS) $(LD_LIBS)
+
+
+all     : $(TARGET1) 
+
+default	: $(TARGET1) 
+
+clean:
+	-$(RM) $(OBJS) $(TARGETS) *~
+
+depend:
+	makedepend -f Makefile.linux $(SRCS)
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.

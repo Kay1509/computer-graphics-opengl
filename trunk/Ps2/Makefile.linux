@@ -1,0 +1,46 @@
+#---------------------------------------------------
+#  Linux  Makefile for Computer Graphics  PS2
+
+# A. Hanson
+
+#   B481/B581
+# Indiana University
+#  
+#---------------------------------------------------
+
+.SUFFIXES: .c .cpp .c++
+
+TARGET = ps2.linux
+SRC =  ps2.c  
+#  <just add more files if you use them > SRC =  ps2.c  display.c
+DEF = defs.h
+
+SRCS = $(SRC) $(DEF)
+LN = ln -s
+MV = mv
+RM = -rm -rf
+
+CC = gcc
+INCLUDES = .
+LD_LIBS =  -lglut -lGLU -lGL  -lm
+CFLAGS  =  -DLINUX
+
+OBJ = $(SRC:.c=.o)
+
+.c.o:
+	($(CC) -c $(CFLAGS) -I$(INCLUDES)  $<)
+.cpp.o:
+	($(CC) -c  $(CFLAGS) -I$(INCLUDES) $<)
+
+$(TARGET): $(OBJ)
+	$(CC)  $(CFLAGS) -o $@ $(OBJ)  $(LOCAL_LIBS) $(LD_LIBS)
+
+default : $(TARGET)
+
+clean:
+	-$(RM) $(OBJ) $(TARGET) *~
+
+depend:
+	makedepend -f Makefile.sgi $(SRCS)
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
